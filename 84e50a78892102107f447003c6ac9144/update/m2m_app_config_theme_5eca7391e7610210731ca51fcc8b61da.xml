@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="m2m_app_config_theme">
+    <m2m_app_config_theme action="INSERT_OR_UPDATE">
+        <applicability display_value="Public">9aca739132610210a16da26e4097b5da</applicability>
+        <order>0</order>
+        <sys_class_name>m2m_app_config_theme</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2024-04-13 09:30:02</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>5eca7391e7610210731ca51fcc8b61da</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_overrides/>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name>m2m_app_config_theme_5eca7391e7610210731ca51fcc8b61da</sys_update_name>
+        <sys_updated_by>system</sys_updated_by>
+        <sys_updated_on>2024-04-13 09:30:02</sys_updated_on>
+        <theme display_value="Light Theme">d2ca7391ba610210af4a01789b98e1db</theme>
+        <ux_app_configuration display_value="Safety issues portal Config">8aca7391686102107f44e4fcecfb8c63</ux_app_configuration>
+    </m2m_app_config_theme>
+</record_update>
