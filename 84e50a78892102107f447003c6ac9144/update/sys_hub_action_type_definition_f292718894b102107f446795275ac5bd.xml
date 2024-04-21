@@ -28,7 +28,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>f292718894b102107f446795275ac5bd</sys_id>
-        <sys_mod_count>39</sys_mod_count>
+        <sys_mod_count>46</sys_mod_count>
         <sys_name>AndroidManifestParser</sys_name>
         <sys_overrides/>
         <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
@@ -36,7 +36,7 @@
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_update_name>sys_hub_action_type_definition_f292718894b102107f446795275ac5bd</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:13:05</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:24:17</sys_updated_on>
         <system_level>false</system_level>
         <type/>
     </sys_hub_action_type_definition>
@@ -156,10 +156,10 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-21 13:06:44</sys_created_on>
         <sys_id>ab19f54094f102107f446795275ac510</sys_id>
-        <sys_mod_count>34</sys_mod_count>
+        <sys_mod_count>36</sys_mod_count>
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:13:05</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:22:26</sys_updated_on>
     </sys_hub_step_instance>
     <sys_variable_value action="delete_multiple" query="document_key=ab19f54094f102107f446795275ac510"/>
     <sys_variable_value action="INSERT_OR_UPDATE">
@@ -184,18 +184,15 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-21 13:06:44</sys_created_on>
         <sys_id>eb19f54094f102107f446795275ac51e</sys_id>
-        <sys_mod_count>33</sys_mod_count>
+        <sys_mod_count>35</sys_mod_count>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:13:05</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:22:26</sys_updated_on>
         <value>(function execute(inputs, outputs) {&#13;
     try {&#13;
-        var attachmentRecord = inputs['attachmentRecord'];&#13;
         var sa = new GlideSysAttachment();&#13;
-        var attachmentBase64 = sa.getContentBase64(attachmentRecord);&#13;
-        var manifestParser = new ManifestParser(attachmentBase64);&#13;
-        outputs['file_name'] = attachmentRecord.file_name;&#13;
-        outputs['manifest_data'] = manifestParser.parse();&#13;
-        gs.info(JSON.stringify(outputs['manifest_data']))&#13;
+        var contentBase64 = sa.getContentBase64(inputs['attachmentRecord']);&#13;
+        var manifestParser = new ManifestParser(contentBase64);&#13;
+        outputs['manifest'] = manifestParser.parse();&#13;
     } catch (error) {&#13;
         gs.info("#### AndroidManifestParser failure:" + error);&#13;
     }&#13;
@@ -327,12 +324,12 @@
         <write_roles/>
         <xml_view>false</xml_view>
     </sys_hub_step_ext_input>
-    <sys_hub_step_ext_output action="delete_multiple" query="model=ab19f54094f102107f446795275ac510^sys_idNOT IN57ceb280943902107f446795275ac589,891cb54494f102107f446795275ac530"/>
+    <sys_hub_step_ext_output action="delete_multiple" query="model=ab19f54094f102107f446795275ac510^sys_idNOT IN4fc10384943902107f446795275ac5a1"/>
     <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
         <active>true</active>
         <array>false</array>
         <array_denormalized>false</array_denormalized>
-        <attributes>co_type_name=FDdbceb2808339021069774d316ffa4e84,element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=object,uiTypeLabel=Object,uiUniqueId=3b7d817f-15ff-47cf-83c1-3eb1ad10762e</attributes>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=json,uiTypeLabel=JSON,uiUniqueId=81b060c5-3267-40ac-80ad-3b051723f45d</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -356,7 +353,7 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>manifest_data</element>
+        <element>manifest</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
@@ -364,93 +361,10 @@
         <function_field>false</function_field>
         <help/>
         <hint/>
-        <internal_type display_value="String">string</internal_type>
-        <label>manifest_data</label>
+        <internal_type display_value="JSON">json</internal_type>
+        <label>manifest</label>
         <mandatory>true</mandatory>
-        <max_length>65000</max_length>
-        <model display_value="Script step">ab19f54094f102107f446795275ac510</model>
-        <model_id>ab19f54094f102107f446795275ac510</model_id>
-        <model_table>sys_hub_step_instance</model_table>
-        <name>var__m_sys_hub_step_ext_output_ab19f54094f102107f446795275ac510</name>
-        <next_element/>
-        <order>2</order>
-        <primary>false</primary>
-        <read_only>false</read_only>
-        <read_roles/>
-        <reference/>
-        <reference_cascade_rule/>
-        <reference_floats>false</reference_floats>
-        <reference_key/>
-        <reference_qual/>
-        <reference_qual_condition/>
-        <reference_type/>
-        <sizeclass/>
-        <spell_check>false</spell_check>
-        <staged>false</staged>
-        <sys_class_name>sys_hub_step_ext_output</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-21 18:11:11</sys_created_on>
-        <sys_id>57ceb280943902107f446795275ac589</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
-        <sys_package/>
-        <sys_policy/>
-        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
-        <sys_update_name/>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:11:11</sys_updated_on>
-        <table_reference>false</table_reference>
-        <text_index>false</text_index>
-        <unique>false</unique>
-        <use_dependent_field>false</use_dependent_field>
-        <use_dynamic_default>false</use_dynamic_default>
-        <use_reference_qualifier>simple</use_reference_qualifier>
-        <virtual>false</virtual>
-        <virtual_type>script</virtual_type>
-        <widget/>
-        <write_roles/>
-        <xml_view>false</xml_view>
-    </sys_hub_step_ext_output>
-    <sys_hub_step_ext_output action="INSERT_OR_UPDATE">
-        <active>true</active>
-        <array>false</array>
-        <array_denormalized>false</array_denormalized>
-        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=string,uiTypeLabel=String,uiUniqueId=48cf3f01-69c9-4bab-b0a2-7ebeb1448efd</attributes>
-        <audit>false</audit>
-        <calculation><![CDATA[(function calculatedFieldValue(current) {
-
-	// Add your code here
-	return '';  // return the calculated value
-
-})(current);]]></calculation>
-        <choice/>
-        <choice_field/>
-        <choice_table/>
-        <column_label/>
-        <comments/>
-        <create_roles/>
-        <default_value/>
-        <defaultsort/>
-        <delete_roles/>
-        <dependent/>
-        <dependent_on_field/>
-        <display>false</display>
-        <dynamic_creation>false</dynamic_creation>
-        <dynamic_creation_script/>
-        <dynamic_default_value/>
-        <dynamic_ref_qual/>
-        <element>file_name</element>
-        <element_reference>false</element_reference>
-        <foreign_database/>
-        <formula/>
-        <function_definition/>
-        <function_field>false</function_field>
-        <help/>
-        <hint/>
-        <internal_type display_value="String">string</internal_type>
-        <label>file_name</label>
-        <mandatory>true</mandatory>
-        <max_length>8000</max_length>
+        <max_length>4000</max_length>
         <model display_value="Script step">ab19f54094f102107f446795275ac510</model>
         <model_id>ab19f54094f102107f446795275ac510</model_id>
         <model_table>sys_hub_step_instance</model_table>
@@ -472,8 +386,8 @@
         <staged>false</staged>
         <sys_class_name>sys_hub_step_ext_output</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-21 13:19:41</sys_created_on>
-        <sys_id>891cb54494f102107f446795275ac530</sys_id>
+        <sys_created_on>2024-04-21 18:24:17</sys_created_on>
+        <sys_id>4fc10384943902107f446795275ac5a1</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package/>
@@ -481,7 +395,7 @@
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 13:19:41</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:24:17</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -495,19 +409,19 @@
         <xml_view>false</xml_view>
     </sys_hub_step_ext_output>
     <sys_hub_input_scripts action="delete_multiple" query="instance=ab19f54094f102107f446795275ac510"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_ab19f54094f102107f446795275ac510^sys_idNOT IN17ceb280943902107f446795275ac58c,8d1cb54494f102107f446795275ac533"/>
+    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_step_ext_output_ab19f54094f102107f446795275ac510^sys_idNOT IN4fc10384943902107f446795275ac5a4"/>
     <sys_documentation action="INSERT_OR_UPDATE">
-        <element>manifest_data</element>
+        <element>manifest</element>
         <help/>
         <hint/>
-        <label>manifest_data</label>
+        <label>manifest</label>
         <language>en</language>
         <name>var__m_sys_hub_step_ext_output_ab19f54094f102107f446795275ac510</name>
         <plural/>
         <sys_class_name>sys_documentation</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-21 18:11:12</sys_created_on>
-        <sys_id>17ceb280943902107f446795275ac58c</sys_id>
+        <sys_created_on>2024-04-21 18:24:17</sys_created_on>
+        <sys_id>4fc10384943902107f446795275ac5a4</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name/>
         <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
@@ -515,30 +429,7 @@
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:11:12</sys_updated_on>
-        <url/>
-        <url_target/>
-    </sys_documentation>
-    <sys_documentation action="INSERT_OR_UPDATE">
-        <element>file_name</element>
-        <help/>
-        <hint/>
-        <label>file_name</label>
-        <language>en</language>
-        <name>var__m_sys_hub_step_ext_output_ab19f54094f102107f446795275ac510</name>
-        <plural/>
-        <sys_class_name>sys_documentation</sys_class_name>
-        <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2024-04-21 13:19:41</sys_created_on>
-        <sys_id>8d1cb54494f102107f446795275ac533</sys_id>
-        <sys_mod_count>0</sys_mod_count>
-        <sys_name/>
-        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
-        <sys_policy/>
-        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
-        <sys_update_name/>
-        <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 13:19:41</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:24:17</sys_updated_on>
         <url/>
         <url_target/>
     </sys_documentation>
@@ -627,7 +518,7 @@
         <xml_view>false</xml_view>
     </sys_hub_action_input>
     <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=6f03798894b102107f446795275ac520"/>
-    <sys_hub_action_output action="delete_multiple" query="model=f292718894b102107f446795275ac5bd^sys_idNOT IN6f19f54094f102107f446795275ac521,ef19f54094f102107f446795275ac532"/>
+    <sys_hub_action_output action="delete_multiple" query="model=f292718894b102107f446795275ac5bd^sys_idNOT IN6f19f54094f102107f446795275ac521,96c00f04943902107f446795275ac536,ef19f54094f102107f446795275ac532"/>
     <sys_hub_action_output action="INSERT_OR_UPDATE">
         <active>true</active>
         <array>false</array>
@@ -675,7 +566,7 @@
         <model_table>sys_hub_action_type_definition</model_table>
         <name>var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd</name>
         <next_element/>
-        <order>1</order>
+        <order>2</order>
         <primary>false</primary>
         <read_only>false</read_only>
         <read_roles/>
@@ -693,14 +584,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-21 13:06:44</sys_created_on>
         <sys_id>6f19f54094f102107f446795275ac521</sys_id>
-        <sys_mod_count>1</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 13:30:56</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:19:52</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -715,6 +606,93 @@
     </sys_hub_action_output>
     <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=6f19f54094f102107f446795275ac521"/>
     <sys_hub_input_scripts action="delete_multiple" query="instance=6f19f54094f102107f446795275ac521"/>
+    <sys_hub_action_output action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <array>false</array>
+        <array_denormalized>false</array_denormalized>
+        <attributes>element_mapping_provider=com.glide.flow_design.action.data.FlowDesignVariableMapper,uiType=json,uiTypeLabel=JSON,uiUniqueId=8c640c0b-ac15-406b-9f03-fcca2e2d6c99</attributes>
+        <audit>false</audit>
+        <calculation><![CDATA[(function calculatedFieldValue(current) {
+
+	// Add your code here
+	return '';  // return the calculated value
+
+})(current);]]></calculation>
+        <choice/>
+        <choice_field/>
+        <choice_table/>
+        <column_label/>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>manifest</element>
+        <element_prototype/>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <help/>
+        <hint/>
+        <internal_link/>
+        <internal_type display_value="JSON">json</internal_type>
+        <label>manifest</label>
+        <mandatory>false</mandatory>
+        <max_length>4000</max_length>
+        <model display_value="AndroidManifestParser">f292718894b102107f446795275ac5bd</model>
+        <model_id>f292718894b102107f446795275ac5bd</model_id>
+        <model_table>sys_hub_action_type_definition</model_table>
+        <name>var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd</name>
+        <next_element/>
+        <order>1</order>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference/>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <sizeclass/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_hub_action_output</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 18:19:51</sys_created_on>
+        <sys_id>96c00f04943902107f446795275ac536</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 18:19:51</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_hub_action_output>
+    <sys_hub_action_input_action_instance action="delete_multiple" query="action_input=96c00f04943902107f446795275ac536"/>
+    <sys_hub_input_scripts action="delete_multiple" query="instance=96c00f04943902107f446795275ac536"/>
     <sys_hub_action_output action="INSERT_OR_UPDATE">
         <active>true</active>
         <array>false</array>
@@ -762,7 +740,7 @@
         <model_table>sys_hub_action_type_definition</model_table>
         <name>var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd</name>
         <next_element/>
-        <order>2</order>
+        <order>3</order>
         <primary>false</primary>
         <read_only>false</read_only>
         <read_roles/>
@@ -780,14 +758,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2024-04-21 13:06:44</sys_created_on>
         <sys_id>ef19f54094f102107f446795275ac532</sys_id>
-        <sys_mod_count>70</sys_mod_count>
+        <sys_mod_count>80</sys_mod_count>
         <sys_name/>
         <sys_package/>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2024-04-21 18:13:05</sys_updated_on>
+        <sys_updated_on>2024-04-21 18:24:17</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
@@ -839,7 +817,7 @@
         <url_target/>
     </sys_documentation>
     <sys_choice action="delete_multiple" query="name=var__m_sys_hub_action_input_f292718894b102107f446795275ac5bd"/>
-    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd^sys_idNOT IN2319f54094f102107f446795275ac532,af19f54094f102107f446795275ac537"/>
+    <sys_documentation action="delete_multiple" query="name=var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd^sys_idNOT IN2319f54094f102107f446795275ac532,52c00f04943902107f446795275ac53a,af19f54094f102107f446795275ac537"/>
     <sys_documentation action="INSERT_OR_UPDATE">
         <element>__action_status__</element>
         <help/>
@@ -860,6 +838,29 @@
         <sys_update_name/>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2024-04-21 13:06:44</sys_updated_on>
+        <url/>
+        <url_target/>
+    </sys_documentation>
+    <sys_documentation action="INSERT_OR_UPDATE">
+        <element>manifest</element>
+        <help/>
+        <hint/>
+        <label>manifest</label>
+        <language>en</language>
+        <name>var__m_sys_hub_action_output_f292718894b102107f446795275ac5bd</name>
+        <plural/>
+        <sys_class_name>sys_documentation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 18:19:52</sys_created_on>
+        <sys_id>52c00f04943902107f446795275ac53a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 18:19:52</sys_updated_on>
         <url/>
         <url_target/>
     </sys_documentation>
