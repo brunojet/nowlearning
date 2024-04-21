@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element db_object_id="1048823c892102107f447003c6ac91d1" label="Issues" max_length="40" name="x_snc_safety_issues" type="collection">
+        <element label="APK file" max_length="32" name="apk_file" reference="x_snc_safety_apk_file" type="reference"/>
         <element attributes="encode_utf8=false" label="Assigned to" max_length="32" name="assigned_to" reference="sys_user" type="reference"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" max_length="40" name="category" type="choice">
             <choice>
@@ -31,12 +32,15 @@
             </choice>
         </element>
         <index name="index">
-            <element name="assigned_to"/>
+            <element name="apk_file"/>
         </index>
         <index name="index2">
-            <element name="location"/>
+            <element name="assigned_to"/>
         </index>
         <index name="index3">
+            <element name="location"/>
+        </index>
+        <index name="index4">
             <element name="opened_by"/>
         </index>
     </element>

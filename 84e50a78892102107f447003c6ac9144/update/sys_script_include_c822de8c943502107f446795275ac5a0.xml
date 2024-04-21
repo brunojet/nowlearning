@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_safety.Base64</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Base64</name>
+        <script><![CDATA[var Base64;
+
+if (typeof Class !== 'undefined' && Class.create) {
+    Base64 = Class.create();
+} else {
+    // Define a função construtora no ambiente do Node.js
+    Base64 = function() {};
+    module.exports = Base64;
+}
+
+Base64.prototype = {
+    chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+    validBase64Regex: /^[A-Za-z0-9+/=]+$/,
+    initialize: function() {},
+    isBase64: function(base64) {
+        return this.validBase64Regex.test(base64);
+    },
+    base64ToArrayBuffer: function(base64) {
+        if (!this.isBase64(base64)) {
+            throw new Error("Invalid base64 string");
+        }
+
+        var str = String(base64).replace(/=+$/, '');
+        var len = str.length;
+        var bytes = new Uint8Array(len / 4 * 3);
+
+        for (var i = 0, j = 0; i < len; i += 4, j += 3) {
+            var buffer1 = this.chars.indexOf(str.charAt(i));
+            var buffer2 = this.chars.indexOf(str.charAt(i + 1));
+            var buffer3 = this.chars.indexOf(str.charAt(i + 2));
+            var buffer4 = this.chars.indexOf(str.charAt(i + 3));
+
+            bytes[j] = (buffer1 << 2) | (buffer2 >> 4);
+            bytes[j + 1] = ((buffer2 & 15) << 4) | (buffer3 >> 2);
+            bytes[j + 2] = ((buffer3 & 3) << 6) | buffer4;
+        }
+        return bytes;
+    },
+    arrayBufferToBase64: function(arrayBuffer) {
+        var bytes = new Uint8Array(arrayBuffer);
+        var base64 = '';
+        var len = bytes.length;
+
+        for (var i = 0; i < len; i += 3) {
+            var buffer1 = bytes[i];
+            var buffer2 = i + 1 < len ? bytes[i + 1] : 0;
+            var buffer3 = i + 2 < len ? bytes[i + 2] : 0;
+
+            var char1 = buffer1 >> 2;
+            var char2 = ((buffer1 & 3) << 4) | (buffer2 >> 4);
+            var char3 = ((buffer2 & 15) << 2) | (buffer3 >> 6);
+            var char4 = buffer3 & 63;
+
+            base64 += this.chars.charAt(char1) + this.chars.charAt(char2) + this.chars.charAt(char3) + this.chars.charAt(char4);
+        }
+
+        return base64;
+    },
+    type: 'Base64'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 14:57:46</sys_created_on>
+        <sys_id>c822de8c943502107f446795275ac5a0</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Base64</sys_name>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name>sys_script_include_c822de8c943502107f446795275ac5a0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 17:41:29</sys_updated_on>
+    </sys_script_include>
+</record_update>

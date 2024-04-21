@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="ca5a82bdcca102107f4462876a4e1709" label="APK file" max_length="40" name="x_snc_safety_apk_file" type="collection">
+        <element label="APK file" max_length="255" name="apk_file" type="file_attachment"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Number" max_length="40" name="number" type="string"/>
+        <element label="Package Name" max_length="40" name="package_name" type="string"/>
+        <element label="User Permissions" max_length="255" name="user_permissions" type="string"/>
+        <element label="Version" max_length="40" name="version" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_safety.ManifestParser</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ManifestParser</name>
+        <script><![CDATA[var ManifestParser;
+
+function initialize(base64, buffer) {
+    try {
+        return base64.base64ToArrayBuffer(buffer);
+    } catch (ignore) {
+        return buffer;
+    }
+}
+
+if (typeof Class !== 'undefined' && Class.create) {
+    ManifestParser = Class.create();
+} else {
+    // Define a função construtora no ambiente do Node.js
+    var BinaryXmlParser = require('./binary.es5');
+    var Base64 = require('./base64.es5');
+    ManifestParser = function(buffer, options = {}) {
+        var base64 = new Base64();
+        this.buffer = initialize(base64, buffer);
+        this.xmlParser = new BinaryXmlParser(this.buffer, options);
+    };
+    module.exports = ManifestParser;
+}
+
+ManifestParser.prototype = {
+    INTENT_MAIN: 'android.intent.action.MAIN',
+    CATEGORY_LAUNCHER: 'android.intent.category.LAUNCHER',
+    initialize: function(buffer, options = {}) {
+        var base64 = new Base64();
+        this.buffer = initialize(base64, buffer);
+        this.xmlParser = new BinaryXmlParser(this.buffer, options);
+    },
+    collapseAttributes: function(element) {
+        var collapsed = Object.create(null);
+        var attributesArray = Array.prototype.slice.call(element.attributes);
+        for (var i = 0; i < attributesArray.length; i++) {
+            var attr = attributesArray[i];
+            collapsed[attr.name] = attr.typedValue.value;
+        }
+        return collapsed;
+    },
+    parseIntents: function(element, target) {
+        target.intentFilters = [];
+        target.metaData = [];
+
+        Array.prototype.forEach.call(element.childNodes, function(element) {
+            switch (element.nodeName) {
+                case 'intent-filter': {
+                    var intentFilter = this.collapseAttributes(element);
+
+                    intentFilter.actions = [];
+                    intentFilter.categories = [];
+                    intentFilter.data = [];
+
+                    Array.prototype.forEach.call(element.childNodes, function(element) {
+                        switch (element.nodeName) {
+                            case 'action':
+                                intentFilter.actions.push(this.collapseAttributes(element));
+                                break;
+                            case 'category':
+                                intentFilter.categories.push(this.collapseAttributes(element));
+                                break;
+                            case 'data':
+                                intentFilter.data.push(this.collapseAttributes(element));
+                                break;
+                        }
+                    }.bind(this));
+
+                    target.intentFilters.push(intentFilter);
+                    break;
+                }
+                case 'meta-data':
+                    target.metaData.push(this.collapseAttributes(element));
+                    break;
+            }
+        }.bind(this));
+    },
+    parseApplication: function(element) {
+        var app = this.collapseAttributes(element);
+
+        app.activities = [];
+        app.activityAliases = [];
+        app.launcherActivities = [];
+        app.services = [];
+        app.receivers = [];
+        app.providers = [];
+        app.usesLibraries = [];
+        app.metaData = [];
+
+        Array.prototype.forEach.call(element.childNodes, function(element) {
+            switch (element.nodeName) {
+                case 'activity': {
+                    var activity = this.collapseAttributes(element);
+                    this.parseIntents(element, activity);
+                    app.activities.push(activity);
+                    if (this.isLauncherActivity(activity)) {
+                        app.launcherActivities.push(activity);
+                    }
+                    break;
+                }
+                case 'activity-alias': {
+                    var activityAlias = this.collapseAttributes(element);
+                    this.parseIntents(element, activityAlias);
+                    app.activityAliases.push(activityAlias);
+                    if (this.isLauncherActivity(activityAlias)) {
+                        app.launcherActivities.push(activityAlias);
+                    }
+                    break;
+                }
+                case 'service': {
+                    var service = this.collapseAttributes(element);
+                    this.parseIntents(element, service);
+                    app.services.push(service);
+                    break;
+                }
+                case 'receiver': {
+                    var receiver = this.collapseAttributes(element);
+                    this.parseIntents(element, receiver);
+                    app.receivers.push(receiver);
+                    break;
+                }
+                case 'provider': {
+                    var provider = this.collapseAttributes(element);
+
+                    provider.grantUriPermissions = [];
+                    provider.metaData = [];
+                    provider.pathPermissions = [];
+
+                    Array.prototype.forEach.call(element.childNodes, function(element) {
+                        switch (element.nodeName) {
+                            case 'grant-uri-permission':
+                                provider.grantUriPermissions.push(this.collapseAttributes(element));
+                                break;
+                            case 'meta-data':
+                                provider.metaData.push(this.collapseAttributes(element));
+                                break;
+                            case 'path-permission':
+                                provider.pathPermissions.push(this.collapseAttributes(element));
+                                break;
+                        }
+                    }.bind(this));
+
+                    app.providers.push(provider);
+                    break;
+                }
+                case 'uses-library':
+                    app.usesLibraries.push(this.collapseAttributes(element));
+                    break;
+                case 'meta-data':
+                    app.metaData.push(this.collapseAttributes(element));
+                    break;
+            }
+        }.bind(this));
+
+        return app;
+    },
+    isLauncherActivity: function(activity) {
+        return activity.intentFilters.some(function(filter) {
+            var hasMain = filter.actions.some(function(action) {
+                return action.name === this.INTENT_MAIN;
+            });
+            if (!hasMain) {
+                return false;
+            }
+            return filter.categories.some(function(category) {
+                return category.name === this.CATEGORY_LAUNCHER;
+            });
+        });
+    },
+    parse: function() {
+        var document = this.xmlParser.parse();
+        var manifest = this.collapseAttributes(document);
+
+        manifest.usesPermissions = [];
+        manifest.usesPermissionsSDK23 = [];
+        manifest.permissions = [];
+        manifest.permissionTrees = [];
+        manifest.permissionGroups = [];
+        manifest.instrumentation = null;
+        manifest.usesSdk = null;
+        manifest.usesConfiguration = null;
+        manifest.usesFeatures = [];
+        manifest.supportsScreens = null;
+        manifest.compatibleScreens = [];
+        manifest.supportsGlTextures = [];
+        manifest.application = Object.create(null);
+
+        Array.prototype.forEach.call(document.childNodes, function(element) {
+            switch (element.nodeName) {
+                case 'uses-permission':
+                    manifest.usesPermissions.push(this.collapseAttributes(element));
+                    break;
+                case 'uses-permission-sdk-23':
+                    manifest.usesPermissionsSDK23.push(this.collapseAttributes(element));
+                    break;
+                case 'permission':
+                    manifest.permissions.push(this.collapseAttributes(element));
+                    break;
+                case 'permission-tree':
+                    manifest.permissionTrees.push(this.collapseAttributes(element));
+                    break;
+                case 'permission-group':
+                    manifest.permissionGroups.push(this.collapseAttributes(element));
+                    break;
+                case 'instrumentation':
+                    manifest.instrumentation = this.collapseAttributes(element);
+                    break;
+                case 'uses-sdk':
+                    manifest.usesSdk = this.collapseAttributes(element);
+                    break;
+                case 'uses-configuration':
+                    manifest.usesConfiguration = this.collapseAttributes(element);
+                    break;
+                case 'uses-feature':
+                    manifest.usesFeatures.push(this.collapseAttributes(element));
+                    break;
+                case 'supports-screens':
+                    manifest.supportsScreens = this.collapseAttributes(element);
+                    break;
+                case 'compatible-screens':
+                    Array.prototype.forEach.call(element.childNodes, function(screen) {
+                        manifest.compatibleScreens.push(this.collapseAttributes(screen));
+                    }.bind(this));
+                    break;
+                case 'supports-gl-texture':
+                    manifest.supportsGlTextures.push(this.collapseAttributes(element));
+                    break;
+                case 'application':
+                    manifest.application = this.parseApplication(element);
+                    break;
+            }
+        }.bind(this));
+
+        return manifest;
+    },
+    type: 'ManifestParser'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 12:30:14</sys_created_on>
+        <sys_id>7640f5c494b102107f446795275ac5db</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>ManifestParser</sys_name>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name>sys_script_include_7640f5c494b102107f446795275ac5db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 17:45:17</sys_updated_on>
+    </sys_script_include>
+</record_update>

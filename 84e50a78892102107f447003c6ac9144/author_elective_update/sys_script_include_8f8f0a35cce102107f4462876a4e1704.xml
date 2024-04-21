@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_safety.ApkInfoParser</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>APK information parser</description>
+        <name>ApkInfoParser</name>
+        <script/>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-14 15:00:53</sys_created_on>
+        <sys_id>8f8f0a35cce102107f4462876a4e1704</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ApkInfoParser</sys_name>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name>sys_script_include_8f8f0a35cce102107f4462876a4e1704</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-14 21:06:19</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Safety">84e50a78892102107f447003c6ac9144</application>
+        <file_path/>
+        <instance_id>212e7868c3e5ced45404dbdf0501314a</instance_id>
+        <instance_name>nowlearning-nlinst01629409-0001</instance_name>
+        <name>sys_script_include_8f8f0a35cce102107f4462876a4e1704</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include"><sys_script_include action="INSERT_OR_UPDATE"><access>package_private</access><active>true</active><api_name>x_snc_safety.ApkInfoParser</api_name><caller_access/><client_callable>false</client_callable><description>APK information parser</description><name>ApkInfoParser</name><script/><sys_class_name>sys_script_include</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2024-04-14 15:00:53</sys_created_on><sys_id>8f8f0a35cce102107f4462876a4e1704</sys_id><sys_mod_count>4</sys_mod_count><sys_name>ApkInfoParser</sys_name><sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package><sys_policy/><sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope><sys_update_name>sys_script_include_8f8f0a35cce102107f4462876a4e1704</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2024-04-14 21:06:19</sys_updated_on></sys_script_include></record_update>]]></payload>
+        <payload_hash>-2056927810</payload_hash>
+        <record_name>ApkInfoParser</record_name>
+        <reverted_from/>
+        <source>09187425686502107f44e4fcecfb8ce7</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-14 21:06:19</sys_created_on>
+        <sys_id>64c3aff1cc6902107f4462876a4e1777</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>18ede6eb0900000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-14 21:06:19</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>6cc3aff141690210acf934787ee16c76</update_guid>
+        <update_guid_history>6cc3aff141690210acf934787ee16c76:-2056927810,be0c13f9f1290210dc1373c3a2c66b35:1402590733,f6db53f968290210cd7cd71f363a4c2c:-1498715632,eb10d23533e10210214e985c7c3f1664:1538864383</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 17:58:47</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>6130b2f1560e474997c343b89494d659</sys_id>
+        <sys_metadata>8f8f0a35cce102107f4462876a4e1704</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ApkInfoParser</sys_name>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_scope_delete display_value="">166bc134d7044400ab07bbdd00982859</sys_scope_delete>
+        <sys_update_name>sys_script_include_8f8f0a35cce102107f4462876a4e1704</sys_update_name>
+        <sys_update_version display_value="sys_script_include_8f8f0a35cce102107f4462876a4e1704">64c3aff1cc6902107f4462876a4e1777</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 17:58:47</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

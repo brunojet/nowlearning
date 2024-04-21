@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_snc_safety.Uint8Array</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Uint8Array</name>
+        <script><![CDATA[var Uint8Array = function(input) {
+    var i;
+    if (typeof input === 'number') {
+        this.length = ~~input;
+        for (i = 0; i < input; i++) {
+            this[i] = 0;
+        }
+    } else {
+        this.length = ~~input.length;
+        for (i = 0; i < input.length; i++) {
+            this[i] = input[i];
+        }
+    }
+};
+
+Uint8Array.prototype = Array.prototype;
+
+Uint8Array.prototype.readUInt16LE = function(offset = 0) {
+    return (this[offset + 1] << 8) | this[offset];
+};
+
+Uint8Array.prototype.readInt32LE = function(offset = 0) {
+    return (this[offset + 3] << 24) |
+        (this[offset + 2] << 16) |
+        (this[offset + 1] << 8) |
+        this[offset];
+};
+
+Uint8Array.prototype.readUInt32LE = function(offset = 0) {
+    return (this[offset + 3] << 24 >>> 0) +
+        (this[offset + 2] << 16) +
+        (this[offset + 1] << 8) +
+        this[offset];
+};
+
+Uint8Array.prototype.toString = function(encoding = 'utf8', start = 0, end = this.length) {
+    var string = '';
+    var i;
+    if (encoding === 'ucs2') {
+        for (i = start; i < end; i += 2) {
+            string += String.fromCharCode(this.readUInt16LE(i));
+        }
+    } else if (encoding === 'utf8') {
+        for (i = start; i < end; i++) {
+            string += String.fromCharCode(this[i]);
+        }
+    } else {
+        throw new Error("Unexpected encoding: " + encoding);
+    }
+    return string;
+};
+
+Uint8Array.prototype.type = 'Uint8Array';]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-04-21 15:28:59</sys_created_on>
+        <sys_id>50499ac4947502107f446795275ac56c</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Uint8Array</sys_name>
+        <sys_package display_value="Safety" source="x_snc_safety">84e50a78892102107f447003c6ac9144</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Safety">84e50a78892102107f447003c6ac9144</sys_scope>
+        <sys_update_name>sys_script_include_50499ac4947502107f446795275ac56c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-04-21 17:40:11</sys_updated_on>
+    </sys_script_include>
+</record_update>
